@@ -1,6 +1,7 @@
 import 'package:asitable/components/subject-item.dart';
 import 'package:flutter/material.dart';
-import 'package:badges/badges.dart';
+import 'package:asitable/microcomponents/Styles.dart';
+import 'package:asitable/microcomponents/Microfunctions.dart';
 
 class SubjectList extends StatelessWidget {
   final Map time = {
@@ -28,55 +29,53 @@ class SubjectList extends StatelessWidget {
 
   Map checkSubjectNames(String name) {
     List snap = [];
-    if(tasks.isNotEmpty){
-    for (Map task in tasks) {
-      if (task['nameOfLesson'] == name) {
-        snap.add(task);
+    if (tasks.isNotEmpty) {
+      for (Map task in tasks) {
+        if (task['nameOfLesson'] == name) {
+          snap.add(task);
+        }
       }
+      return (snap.isNotEmpty ? snap[0] : {});
     }
-    return (snap.isNotEmpty ? snap[0] : {});
-  }}
-
-  Gradient whoLes(String s) {
-    List<Color> color = [Colors.transparent, Colors.transparent];
-    switch (s) {
-      case "red":
-        color = [Colors.pink, Colors.orange];
-        break;
-      case "blue":
-        color = [Colors.indigo, Colors.cyan];
-        break;
-      case "both":
-        color = [Colors.teal, Colors.lime];
-        break;
-    }
-    return LinearGradient(
-        colors: color, begin: Alignment.bottomLeft, end: Alignment.topRight);
   }
 
-  List<Widget> getList() {
-    List mapOfLessons = weekday["List"];
-    return mapOfLessons
-        .asMap()
-        .map((index, value) => MapEntry(
+  Gradient whoLes(String s) {
+    switch (s) {
+      case "red":
+        return TashiGradients['red'];
+        break;
+      case "blue":
+        return TashiGradients['blue'];
+        break;
+      case "both":
+        return TashiGradients['green'];
+        break;
+      default:
+        return TashiGradients['transparent'];
+        break;
+    }
+  }
+
+  List<Subject> getList() {
+    return List<Subject>.from(genList(
+        weekday["List"],
+        (index, value) => new Subject(
             index,
-            new Subject(
-                index,
-                value["Name"],
-                cab(value["Cabinet"]),
-                whoLes(value["Who"]),
-                this.time[index]["start"],
-                this.time[index]["end"],
-                checkSubjectNames(value["Name"]))))
-        .values
-        .toList();
+            value["Name"],
+            cab(value["Cabinet"]),
+            whoLes(value["Who"]),
+            this.time[index]["start"],
+            this.time[index]["end"],
+            checkSubjectNames(value["Name"]))));
   }
 
   Widget build(BuildContext context) {
-    return ListView(
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      children: getList(),
-    );
+    return Container(
+        width: 900,
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          children: getList(),
+        ));
   }
 }

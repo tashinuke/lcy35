@@ -1,10 +1,9 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:asitable/components/hometask-viewer.dart';
-
-String toHumanTime(int start, int end) {
-  return "${start ~/ 60}:${start % 60 > 9 ? start % 60 : '0' + (start % 60).toString()} - ${end ~/ 60}:${end % 60 > 9 ? end % 60 : '0' + (end % 60).toString()}";
-}
+import 'package:asitable/microcomponents/Styles.dart';
+import 'package:asitable/microcomponents/Microfunctions.dart';
+import 'package:fluentui_icons/fluentui_icons.dart';
 
 class Subject extends StatelessWidget {
   String room;
@@ -27,14 +26,15 @@ class Subject extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => new HometaskViewer(task)));
           } else {
-            Scaffold.of(context).showSnackBar(SnackBar(
-              behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
                 margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 backgroundColor: Color(0xFF002741),
                 content: Row(
                   children: [
-                    Icon(Icons.error),
+                    Icon(FluentSystemIcons.ic_fluent_error_circle_filled),
                     SizedBox(width: 20),
                     Text('Домашнего задания нет')
                   ],
@@ -46,47 +46,48 @@ class Subject extends StatelessWidget {
                 BoxDecoration(shape: BoxShape.circle, gradient: subjectState),
             child: CircleAvatar(
                 child:
-                    Text("${order + 1}", style: TextStyle(color: Colors.white)),
+                    Text("${order + 1}", style: SimpleTS),
                 backgroundColor: Colors.transparent)),
         title: Row(children: [
           Badge(
-            position: BadgePosition.topEnd(top: -3, end: -12),
+            position: BadgePosition.topEnd(top: 3, end: -20),
             showBadge: (task != null ? task.isNotEmpty : false),
             child: Text(
               " $name",
-              style: TextStyle(color: Colors.white, fontFamily: 'Rubik'),
+              style: SimpleTS
             ),
           )
         ]),
         subtitle: Row(children: [
           Card(
             elevation: 0,
-            color: Colors.transparent,
+            color: TashiColors['in'],
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(7.0),
-                side: BorderSide(width: 1, color: Colors.white70)),
+              borderRadius: BorderRadius.circular(7.0),
+              // side: BorderSide(width: 1, color: Color(0xFF002741)),
+            ),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
               child: Text(room,
-                  style: TextStyle(color: Colors.white, fontFamily: 'Rubik')),
+                  style: SubtextTS),
             ),
           ),
           Card(
             elevation: 0,
-            color: Colors.blueGrey,
+            color: TashiColors['in'],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7.0),
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
-              child: Text(toHumanTime(this.timeOfStart, this.timeOfEnd),
-                  style: TextStyle(color: Colors.white, fontFamily: 'Rubik')),
+              child: toHumanTime(this.timeOfStart, this.timeOfEnd),
             ),
           ),
         ]),
         trailing: Icon(
-          Icons.keyboard_arrow_right,
+          FluentSystemIcons.ic_fluent_chevron_right_filled,
           color: Colors.white,
+          size: 18,
         ));
   }
 }

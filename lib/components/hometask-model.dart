@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:asitable/components/timetable-model.dart';
@@ -47,22 +46,14 @@ class HometaskModel {
     now = now ?? new DateTime.now();
     int day = now.weekday;
     List week = [];
+    print('day:' + day.toString());
     for (int i = DateTime.monday; i <= DateTime.friday; i++) {
       DateTime c = now.add(new Duration(days: i)).subtract(
           new Duration(days: day));
       String gen = "${c.year}-${c.month}-${c.day}";
+      print('i:' + i.toString());
       week.add(gen);
     }
     return week;
-  }
-
-  // ignore: missing_return
-  Future createTask() {
-
-  }
-
-  // ignore: missing_return
-  Future updateTask() {
-
   }
 }

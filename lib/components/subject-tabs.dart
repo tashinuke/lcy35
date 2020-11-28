@@ -1,11 +1,11 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:asitable/components/timetable-model.dart';
 import 'package:asitable/components/subject-list.dart';
 import 'package:asitable/components/hometask-model.dart';
-import 'package:http/http.dart';
+import 'package:asitable/microcomponents/Styles.dart';
+import 'package:asitable/microcomponents/Microfunctions.dart';
+import 'package:asitable/components/hometask-creator.dart';
+import 'package:fluentui_icons/fluentui_icons.dart';
 
 class AFB extends StatefulWidget {
   // This widget is the root of your application.
@@ -23,7 +23,7 @@ class AFBstate extends State<AFB> {
   Widget build(BuildContext context) {
     var now = new DateTime.now();
     List week = ht.getCurrentWeek(
-        now: (now.weekday < 5
+        now: (now.weekday <= 5
             ? now
             : now.add(new Duration(days: 8 - now.weekday))));
     return FutureBuilder(
@@ -44,63 +44,51 @@ class AFBstate extends State<AFB> {
           List data = snapshot.data['sh'];
           Map hmt = snapshot.data['ht'];
           List getByDay(data) {
-            print(week.toString());
-            List it = data
-                .asMap()
-                .map((index, value) {
-                  return MapEntry(
-                      index,
-                      new Center(
-                        child: new SubjectList(
-                            value,
-                            (hmt.containsKey(week[index])
-                                ? hmt[week[index]]
-                                : [])),
-                      ));
-                })
-                .values
-                .toList();
-            return it;
-          }
-
-          int getDay() {
-            int day = now.weekday - 1;
-            if (day < 5) {
-              return day;
-            } else {
-              return 0;
-            }
+            return genList(
+                data,
+                (index, value) => Center(
+                      child: new SubjectList(
+                          value,
+                          (hmt.containsKey(week[index])
+                              ? hmt[week[index]]
+                              : [])),
+                    ));
           }
 
           return DefaultTabController(
-            initialIndex: getDay(),
+            initialIndex: getDay(now),
             length: data.length,
             child: Scaffold(
               backgroundColor: Color(0xFF001A2B),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => new HometaskCreator(data)));
+                },
+                child: Icon(FluentSystemIcons.ic_fluent_compose_filled),
+                backgroundColor: Colors.lightBlue,
+              ),
               appBar: AppBar(
                 elevation: 0,
                 automaticallyImplyLeading: false,
-                title: Container(
-                  child: const Text('Расписание',
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: 'Rubik',
-                          fontWeight: FontWeight.w700)),
-                ),
+                title: Text('Расписание',
+                    style: TitleTS),
                 actions: [
                   FlatButton.icon(
+                    splashColor: Colors.white54,
                       onPressed: () async {
                         this.source = 'f';
                         this.setState(() {});
                       },
                       icon: Icon(
-                        Icons.refresh,
+                        (model.from == 'cache' ? FluentSystemIcons.ic_fluent_cloud_off_filled: FluentSystemIcons.ic_fluent_cloud_filled),
                         color: Colors.white,
                       ),
                       label: Text(
                           (model.from == 'cache' ? 'Локальное' : 'Серверное'),
-                          style: TextStyle(
-                              color: Colors.white, fontFamily: 'Rubik')))
+                          style: SimpleTS))
                 ],
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(50),
@@ -115,17 +103,12 @@ class AFBstate extends State<AFB> {
                         for (final tab in data)
                           Tab(
                             child: Text(tab['Name'],
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontFamily: 'Rubik',
-                                    fontWeight: FontWeight.w600)),
+                                style: LabelTS),
                           ),
                       ],
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(30)),
-                        gradient: LinearGradient(
-                          colors: [Colors.blueAccent, Colors.cyan],
-                        ),
+                        gradient: TashiGradients['accent'],
                       ),
                     ),
                   ),
@@ -138,24 +121,17 @@ class AFBstate extends State<AFB> {
             ),
           );
         } else if (snapshot.hasError) {
-          return Text("${snapshot.error}",
-              style: TextStyle(
-                  fontFamily: 'Rubik',
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white70));
+          return Text("${snapshot.error}", style: SimpleTS);
         }
         return Scaffold(
-            backgroundColor: Color(0xFF001A2B),
+            backgroundColor: TashiColors['bk'],
             appBar: AppBar(
+              elevation: 0,
               automaticallyImplyLeading: false,
               title: Padding(
                 padding: EdgeInsets.only(left: 0),
                 child: Container(
-                  child: const Text('Расписание',
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: 'Rubik',
-                          fontWeight: FontWeight.w700)),
+                  child: Text('Расписание', style: LabelTS),
                 ),
               ),
             ),
