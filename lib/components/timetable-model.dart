@@ -9,7 +9,6 @@ class TimetableModel {
     String hasBeen = prefs.getString('sheduleCache') ?? '';
     if (hasBeen != '') {
       Map data = json.decode(hasBeen);
-      print('cached: ' + hasBeen);
       this.from = 'cache';
       return data['Shedule'];
     } else {
@@ -25,7 +24,6 @@ class TimetableModel {
     final res = await http.get('https://stnk2a.herokuapp.com/thirty-five');
     var data = await json.decode((res.body));
     prefs.setString('sheduleCache', res.body);
-    print('fetched: ' + data.toString());
     this.from = 'net';
     return data['Shedule'];
   }

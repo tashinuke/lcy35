@@ -115,8 +115,9 @@ class HometaskCreatorState extends State<HometaskCreator> {
                 // side: BorderSide(width: 1, color: Color(0xFF002741)),
               ),
               onPressed: () async {
+                var c = pickedDate;
                 String gen =
-                    "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                    "${c.year}-${(c.month < 10 ? '0' + c.month.toString() : c.month.toString())}-${(c.day < 10 ? '0' + c.day.toString() : c.day.toString())}";
                 await http
                     .post('https://stnk2a.herokuapp.com/hometasks', body: {
                   'nameOfLesson': selectedSubject ?? 'monsun',
