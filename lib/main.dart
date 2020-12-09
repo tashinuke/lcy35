@@ -17,7 +17,7 @@ class AppState extends State<App> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Расписание',
-      theme: ThemeData(primaryColor: const Color(0xFF001A2B)),
+      theme: ThemeData(primaryColor: nau),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
