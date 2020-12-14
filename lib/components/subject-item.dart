@@ -36,7 +36,10 @@ class Subject extends StatelessWidget {
                   children: [
                     Icon(FluentSystemIcons.ic_fluent_error_circle_filled),
                     SizedBox(width: 20),
-                    Text('Домашнего задания нет')
+                    Text(
+                      'Домашнего задания нет',
+                      style: SimpleTS,
+                    )
                   ],
                 )));
           }
@@ -45,17 +48,13 @@ class Subject extends StatelessWidget {
             decoration:
                 BoxDecoration(shape: BoxShape.circle, gradient: subjectState),
             child: CircleAvatar(
-                child:
-                    Text("${order + 1}", style: SimpleTS),
+                child: Text("${order + 1}", style: SimpleTS),
                 backgroundColor: Colors.transparent)),
         title: Row(children: [
           Badge(
             position: BadgePosition.topEnd(top: 3, end: -20),
             showBadge: (task != null ? task.isNotEmpty : false),
-            child: Text(
-              " $name",
-              style: SimpleTS
-            ),
+            child: Text(" $name", style: SimpleTS),
           )
         ]),
         subtitle: Row(children: [
@@ -68,14 +67,12 @@ class Subject extends StatelessWidget {
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
-              child: Text(room,
-                  style: SubtextTS),
+              child: Text(room, style: SubtextTS),
             ),
           ),
-          Card(
-            elevation: 0,
-            color: TashiColors['in'],
-            shape: RoundedRectangleBorder(
+          Container(
+            decoration: BoxDecoration(
+              color: TashiColors['in'],
               borderRadius: BorderRadius.circular(7.0),
             ),
             child: Padding(

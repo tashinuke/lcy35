@@ -4,26 +4,44 @@ import 'package:asitable/microcomponents/Styles.dart';
 import 'package:asitable/microcomponents/Microfunctions.dart';
 
 class SubjectList extends StatelessWidget {
-  final Map time = {
-    0: {'start': 510, 'end': 550},
-    1: {'start': 565, 'end': 605},
-    2: {'start': 620, 'end': 660},
-    3: {'start': 675, 'end': 715},
-    4: {'start': 730, 'end': 770},
-    5: {'start': 785, 'end': 825},
-    6: {'start': 835, 'end': 875},
-    7: {'start': 900, 'end': 1080},
-  };
+  bool timetableSwitch;
+
   Map weekday;
   List tasks;
 
-  SubjectList(this.weekday, this.tasks);
+  SubjectList(this.weekday, this.tasks, this.timetableSwitch);
 
   String cab(number) {
     if (number != 0) {
       return number.toString();
     } else {
       return 'Спортзал';
+    }
+  }
+
+  getTimetable() {
+    if (timetableSwitch) {
+      return {
+        0: {'start': 510, 'end': 540},
+        1: {'start': 555, 'end': 585},
+        2: {'start': 600, 'end': 630},
+        3: {'start': 645, 'end': 675},
+        4: {'start': 690, 'end': 720},
+        5: {'start': 735, 'end': 765},
+        6: {'start': 775, 'end': 805},
+        7: {'start': 900, 'end': 1080},
+      };
+    } else {
+      return {
+        0: {'start': 510, 'end': 550},
+        1: {'start': 565, 'end': 605},
+        2: {'start': 620, 'end': 660},
+        3: {'start': 675, 'end': 715},
+        4: {'start': 730, 'end': 770},
+        5: {'start': 785, 'end': 825},
+        6: {'start': 835, 'end': 875},
+        7: {'start': 900, 'end': 1080},
+      };
     }
   }
 
@@ -64,8 +82,8 @@ class SubjectList extends StatelessWidget {
             value["Name"],
             cab(value["Cabinet"]),
             whoLes(value["Who"]),
-            this.time[index]["start"],
-            this.time[index]["end"],
+            getTimetable()[index]["start"],
+            getTimetable()[index]["end"],
             checkSubjectNames(value["Name"]))));
   }
 

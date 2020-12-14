@@ -33,23 +33,23 @@ const Map TashiColors = const <String, Color>{
   'rp': const Color(0xAF0066FF), // transparent primary
 };
 const Map TashiGradients = {
-  'red': const LinearGradient(
+  'red': LinearGradient(
       colors: [Colors.pink, Colors.orange],
       begin: Alignment.bottomLeft,
       end: Alignment.topRight),
-  'blue': const LinearGradient(
+  'blue': LinearGradient(
       colors: [Colors.indigo, Colors.cyan],
       begin: Alignment.bottomLeft,
       end: Alignment.topRight),
-  'green': const LinearGradient(
+  'green':  LinearGradient(
       colors: [Colors.teal, Colors.lime],
       begin: Alignment.bottomLeft,
       end: Alignment.topRight),
-  'accent': const LinearGradient(
+  'accent':  LinearGradient(
       colors: [Colors.blueAccent, Colors.lightBlueAccent],
       begin: Alignment.bottomLeft,
       end: Alignment.topRight),
-  'transparent': const LinearGradient(
+  'transparent': LinearGradient(
       colors: [Colors.transparent, Colors.transparent],
       begin: Alignment.bottomLeft,
       end: Alignment.topRight),

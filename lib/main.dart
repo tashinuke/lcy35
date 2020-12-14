@@ -1,3 +1,4 @@
+import 'package:asitable/microcomponents/Styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:asitable/components/subject-tabs.dart';
@@ -17,7 +18,7 @@ class AppState extends State<App> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Расписание',
-      theme: ThemeData(primaryColor: nau),
+      theme: ThemeData(primaryColor: TashiColors['bk']),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

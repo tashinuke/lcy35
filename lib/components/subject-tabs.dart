@@ -19,6 +19,7 @@ class AFBstate extends State<AFB> {
   HometaskModel ht = new HometaskModel();
   TimetableModel model = new TimetableModel();
   String source = '';
+  bool timetableSwitch = false;
 
   Widget build(BuildContext context) {
     var now = new DateTime.now();
@@ -51,7 +52,8 @@ class AFBstate extends State<AFB> {
                           value,
                           (hmt.containsKey(week[index])
                               ? hmt[week[index]]
-                              : [])),
+                              : []),
+                          timetableSwitch),
                     ));
           }
 
@@ -73,22 +75,58 @@ class AFBstate extends State<AFB> {
               appBar: AppBar(
                 elevation: 0,
                 automaticallyImplyLeading: false,
-                title: Text('Расписание',
-                    style: TitleTS),
+                title: Text('Расписание', style: TitleTS),
                 actions: [
-                  FlatButton.icon(
+                  IconButton(
+                    icon: Icon(
+                        (timetableSwitch
+                            ? FluentSystemIcons.ic_fluent_clock_filled
+                            : FluentSystemIcons.ic_fluent_clock_regular),
+                        color: Colors.white),
+                    onPressed: () async {
+                      this.timetableSwitch = !this.timetableSwitch;
+                      this.setState(() {});
+                    },
+                  ),
+                  IconButton(
                     splashColor: Colors.white54,
-                      onPressed: () async {
-                        this.source = 'f';
-                        this.setState(() {});
-                      },
-                      icon: Icon(
-                        (model.from == 'cache' ? FluentSystemIcons.ic_fluent_cloud_off_filled: FluentSystemIcons.ic_fluent_cloud_filled),
-                        color: Colors.white,
-                      ),
-                      label: Text(
-                          (model.from == 'cache' ? 'Локальное' : 'Серверное'),
-                          style: SimpleTS))
+                    onPressed: () async {
+                      this.source = 'f';
+                      this.setState(() {});
+                    },
+                    icon: Icon(
+                      (model.from == 'cache'
+                          ? FluentSystemIcons.ic_fluent_cloud_regular
+                          : FluentSystemIcons.ic_fluent_cloud_filled),
+                      color: Colors.white,
+                    ),
+                  ),
+                  IconButton(
+                    splashColor: Colors.white54,
+                    onPressed: () async {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          backgroundColor: Color(0xFF002741),
+                          content: Row(
+                            children: [
+                              SizedBox(width: 20),
+                              Text(
+                                'Made by tashinuke with ❤️ for licey №35',
+                                style: SimpleTS,
+                              ),
+                            ],
+                          )));
+                    },
+                    icon: Icon(
+                      FluentSystemIcons.ic_fluent_person_regular,
+                      color: Colors.white,
+                    ),
+                  )
                 ],
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(50),
@@ -102,8 +140,7 @@ class AFBstate extends State<AFB> {
                       tabs: [
                         for (final tab in data)
                           Tab(
-                            child: Text(tab['Name'],
-                                style: LabelTS),
+                            child: Text(tab['Name'], style: LabelTS),
                           ),
                       ],
                       indicator: BoxDecoration(
