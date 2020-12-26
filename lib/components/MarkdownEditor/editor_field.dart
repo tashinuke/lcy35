@@ -31,7 +31,7 @@ class MrkdownEditingField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: SimpleTS,
+      style: Theme.of(context).textTheme.bodyText1,
       maxLines: maxLines,
       controller: controller,
     );

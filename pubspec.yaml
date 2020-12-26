@@ -21,6 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  bloc: ^6.1.0
+  flutter_bloc: ^6.1.0
   http: ^0.12.2
   fluttertoast: ^7.1.4
   fluentui_icons: ^0.2.0

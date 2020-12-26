@@ -13,18 +13,21 @@ class HometaskViewer extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: TashiColors['bk'],
         appBar: AppBar(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(FluentSystemIcons.ic_fluent_arrow_left_filled),
+            icon: Icon(FluentSystemIcons.ic_fluent_arrow_left_filled,
+                color: Theme.of(context).textTheme.bodyText1.color),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           title: Container(
-            child: new Text(task['nameOfLesson'], style: TitleTS),
-          ),
+              child: new Text(
+            task['nameOfLesson'],
+            style: Theme.of(context).textTheme.headline1,
+          )),
           actions: [
             IconButton(
               onPressed: () async {
@@ -35,18 +38,22 @@ class HometaskViewer extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15))),
                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    backgroundColor: Color(0xFF002741),
+                    backgroundColor: Theme.of(context).accentColor,
                     content: Row(
                       children: [
-                        Icon(FluentSystemIcons.ic_fluent_checkmark_filled),
+                        Icon(
+                          FluentSystemIcons.ic_fluent_checkmark_filled,
+                          color: Theme.of(context).textTheme.bodyText1.color,
+                        ),
                         SizedBox(width: 20),
-                        Text('Успешно удалено', style: SimpleTS)
+                        Text('Успешно удалено',
+                            style: Theme.of(context).textTheme.bodyText1)
                       ],
                     )));
               },
               icon: Icon(
                 FluentSystemIcons.ic_fluent_delete_filled,
-                color: Colors.white,
+                color: Theme.of(context).textTheme.bodyText1.color,
               ),
             )
           ],
@@ -61,16 +68,16 @@ class HometaskViewer extends StatelessWidget {
                       barrierDismissible: true,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title:
-                              Text('Вы точно хотите перейти?', style: SimpleTS),
+                          title: Text('Вы точно хотите перейти?'),
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(30))),
                           insetPadding: EdgeInsets.symmetric(horizontal: 30),
                           backgroundColor: Color(0xFF002741),
                           content: SingleChildScrollView(
-                            child: Text('Ссылка может содержать опасности',
-                                style: SubtextTS),
+                            child: Text(
+                              'Ссылка может содержать опасности',
+                            ),
                           ),
                           actions: <Widget>[
                             CupertinoButton(
@@ -94,13 +101,20 @@ class HometaskViewer extends StatelessWidget {
                       },
                     );
                   },
+                  styleSheet: MarkdownStyleSheet(
+                      blockquote: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          .copyWith(color: Colors.black),
+                      p: Theme.of(context).textTheme.bodyText1,
+                      h1: Theme.of(context).textTheme.headline1,
+                      h2: Theme.of(context).textTheme.headline2),
                   shrinkWrap: true,
                   data: '> Домашнее задание за ' +
                       task['date'] +
                       ":\n \n" +
                       task['content'],
-                  selectable: true,
-                  styleSheet: markdownStylesTS(context))),
+                  selectable: true)),
         ));
   }
 }

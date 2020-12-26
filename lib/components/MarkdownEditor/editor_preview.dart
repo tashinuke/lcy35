@@ -29,6 +29,10 @@ class MarkdownPreview extends StatelessWidget {
     return Scrollbar(
       child: SingleChildScrollView(
         child: Markdown(
+          styleSheet: MarkdownStyleSheet(
+              p: Theme.of(context).textTheme.bodyText1,
+              h1: Theme.of(context).textTheme.headline1,
+              h2: Theme.of(context).textTheme.headline2),
           controller: ScrollController(),
           selectable: selectable,
           onTapLink: (_, href, __) {
@@ -42,7 +46,7 @@ class MarkdownPreview extends StatelessWidget {
                   gravity: ToastGravity.CENTER,
                   timeInSecForIosWeb: 1,
                   backgroundColor: Colors.red,
-                  textColor: Colors.white,
+                  textColor: TashiColors['tl'],
                   fontSize: 16.0,
                 );
               }
@@ -50,7 +54,6 @@ class MarkdownPreview extends StatelessWidget {
           },
           data: text,
           shrinkWrap: true,
-          styleSheet: markdownStylesTS(context),
           extensionSet: md.ExtensionSet(
             md.ExtensionSet.gitHubFlavored.blockSyntaxes,
             [

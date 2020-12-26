@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
+import 'package:asitable/microcomponents/Styles.dart';
+
 typedef _prompt = Future<String> Function();
 
 /// A future function that can be used to prompt for a url or image source.
@@ -8,9 +10,9 @@ typedef _prompt = Future<String> Function();
 ///
 /// Check the function _takeInput for an example.
 typedef UrlSource = Future<String> Function({
-@required BuildContext context,
-@required String hint,
-@required String label,
+  @required BuildContext context,
+  @required String hint,
+  @required String label,
 });
 
 /// A row of icons(buttons) that can be used to manipulate the text.
@@ -62,7 +64,10 @@ class MarkdownEditorIcons extends StatelessWidget {
           children: [
             IconButton(
               tooltip: 'Bold',
-              icon: Icon(FluentSystemIcons.ic_fluent_text_bold_filled, color: Colors.white70),
+              icon: Icon(
+                FluentSystemIcons.ic_fluent_text_bold_filled,
+                color: Theme.of(context).textTheme.bodyText2.color,
+              ),
               onPressed: () => _surroundTextSelection(
                 '**',
                 '**',
@@ -70,7 +75,10 @@ class MarkdownEditorIcons extends StatelessWidget {
             ),
             IconButton(
               tooltip: 'Underline',
-              icon: Icon(FluentSystemIcons.ic_fluent_text_underline_filled, color: Colors.white70),
+              icon: Icon(
+                FluentSystemIcons.ic_fluent_text_underline_filled,
+                color: Theme.of(context).textTheme.bodyText2.color,
+              ),
               onPressed: () => _surroundTextSelection(
                 '__',
                 '__',
@@ -78,7 +86,10 @@ class MarkdownEditorIcons extends StatelessWidget {
             ),
             IconButton(
               tooltip: 'Code',
-              icon: Icon(FluentSystemIcons.ic_fluent_code_filled, color: Colors.white70),
+              icon: Icon(
+                FluentSystemIcons.ic_fluent_code_filled,
+                color: Theme.of(context).textTheme.bodyText2.color,
+              ),
               onPressed: () => _surroundTextSelection(
                 '```',
                 '```',
@@ -86,7 +97,10 @@ class MarkdownEditorIcons extends StatelessWidget {
             ),
             IconButton(
               tooltip: 'Strikethrough',
-              icon: Icon(FluentSystemIcons.ic_fluent_text_strikethrough_filled, color: Colors.white70),
+              icon: Icon(
+                FluentSystemIcons.ic_fluent_text_strikethrough_filled,
+                color: Theme.of(context).textTheme.bodyText2.color,
+              ),
               onPressed: () => _surroundTextSelection(
                 '~~',
                 '~~',
@@ -94,7 +108,10 @@ class MarkdownEditorIcons extends StatelessWidget {
             ),
             IconButton(
                 tooltip: 'Link',
-                icon: Icon(FluentSystemIcons.ic_fluent_link_filled, color: Colors.white70),
+                icon: Icon(
+                  FluentSystemIcons.ic_fluent_link_filled,
+                  color: Theme.of(context).textTheme.bodyText2.color,
+                ),
                 onPressed: () {
                   _surroundTextSelection(
                     '[',
@@ -109,7 +126,10 @@ class MarkdownEditorIcons extends StatelessWidget {
                 }),
             IconButton(
               tooltip: 'Image',
-              icon: Icon(FluentSystemIcons.ic_fluent_image_add_filled, color: Colors.white70),
+              icon: Icon(
+                FluentSystemIcons.ic_fluent_image_add_filled,
+                color: Theme.of(context).textTheme.bodyText2.color,
+              ),
               onPressed: () => _surroundTextSelection(
                 '![',
                 '](',
@@ -140,11 +160,11 @@ class MarkdownEditorIcons extends StatelessWidget {
   }
 
   void _surroundTextSelection(
-      String left,
-      String right, {
-        _prompt prompt,
-        String afterPrompt,
-      }) async {
+    String left,
+    String right, {
+    _prompt prompt,
+    String afterPrompt,
+  }) async {
     final currentTextValue = controller.value.text;
     final selection = controller.selection;
     final middle = selection.textInside(currentTextValue);

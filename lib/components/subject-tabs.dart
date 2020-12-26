@@ -61,7 +61,6 @@ class AFBstate extends State<AFB> {
             initialIndex: getDay(now),
             length: data.length,
             child: Scaffold(
-              backgroundColor: Color(0xFF001A2B),
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   Navigator.push(
@@ -69,27 +68,41 @@ class AFBstate extends State<AFB> {
                       MaterialPageRoute(
                           builder: (context) => new HometaskCreator(data)));
                 },
-                child: Icon(FluentSystemIcons.ic_fluent_compose_filled),
-                backgroundColor: Colors.lightBlue,
+                child: Icon(
+                  FluentSystemIcons.ic_fluent_compose_filled,
+                  color: Theme.of(context).textTheme.bodyText1.color,
+                ),
               ),
               appBar: AppBar(
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 elevation: 0,
                 automaticallyImplyLeading: false,
-                title: Text('Расписание', style: TitleTS),
+                title: Text(
+                  'Расписание',
+                  style: Theme.of(context).textTheme.headline1,
+                ),
                 actions: [
                   IconButton(
                     icon: Icon(
-                        (timetableSwitch
-                            ? FluentSystemIcons.ic_fluent_clock_filled
-                            : FluentSystemIcons.ic_fluent_clock_regular),
-                        color: Colors.white),
+                      (timetableSwitch
+                          ? FluentSystemIcons.ic_fluent_clock_filled
+                          : FluentSystemIcons.ic_fluent_clock_regular),
+                      color: Theme.of(context).textTheme.bodyText1.color,
+                    ),
                     onPressed: () async {
                       this.timetableSwitch = !this.timetableSwitch;
                       this.setState(() {});
                     },
                   ),
                   IconButton(
-                    splashColor: Colors.white54,
+                    icon: Icon(
+                      FluentSystemIcons.ic_fluent_dark_theme_regular,
+                    ),
+                    onPressed: () {},
+                    color: Theme.of(context).textTheme.bodyText1.color,
+                  ),
+                  IconButton(
+                    splashColor: TashiColors['sb'],
                     onPressed: () async {
                       this.source = 'f';
                       this.setState(() {});
@@ -98,11 +111,11 @@ class AFBstate extends State<AFB> {
                       (model.from == 'cache'
                           ? FluentSystemIcons.ic_fluent_cloud_regular
                           : FluentSystemIcons.ic_fluent_cloud_filled),
-                      color: Colors.white,
+                      color: Theme.of(context).textTheme.bodyText1.color,
                     ),
                   ),
                   IconButton(
-                    splashColor: Colors.white54,
+                    splashColor: TashiColors['sb'],
                     onPressed: () async {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           behavior: SnackBarBehavior.floating,
@@ -111,20 +124,19 @@ class AFBstate extends State<AFB> {
                                   BorderRadius.all(Radius.circular(15))),
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
-                          backgroundColor: Color(0xFF002741),
+                          backgroundColor: Theme.of(context).accentColor,
                           content: Row(
                             children: [
                               SizedBox(width: 20),
                               Text(
                                 'Made by tashinuke with ❤️ for licey №35',
-                                style: SimpleTS,
                               ),
                             ],
                           )));
                     },
                     icon: Icon(
                       FluentSystemIcons.ic_fluent_person_regular,
-                      color: Colors.white,
+                      color: Theme.of(context).textTheme.bodyText1.color,
                     ),
                   )
                 ],
@@ -140,12 +152,15 @@ class AFBstate extends State<AFB> {
                       tabs: [
                         for (final tab in data)
                           Tab(
-                            child: Text(tab['Name'], style: LabelTS),
+                            child: Text(
+                              tab['Name'],
+                              style: Theme.of(context).textTheme.headline2,
+                            ),
                           ),
                       ],
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(30)),
-                        gradient: TashiGradients['accent'],
+                        gradient: tashiGradients(context)['accent'],
                       ),
                     ),
                   ),
@@ -158,7 +173,7 @@ class AFBstate extends State<AFB> {
             ),
           );
         } else if (snapshot.hasError) {
-          return Text("${snapshot.error}", style: SimpleTS);
+          return Text("${snapshot.error}");
         }
         return Scaffold(
             backgroundColor: TashiColors['bk'],
@@ -168,7 +183,7 @@ class AFBstate extends State<AFB> {
               title: Padding(
                 padding: EdgeInsets.only(left: 0),
                 child: Container(
-                  child: Text('Расписание', style: LabelTS),
+                  child: Text('Расписание'),
                 ),
               ),
             ),

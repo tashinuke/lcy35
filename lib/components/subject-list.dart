@@ -57,31 +57,31 @@ class SubjectList extends StatelessWidget {
     }
   }
 
-  Gradient whoLes(String s) {
+  Gradient whoLes(String s, context) {
     switch (s) {
       case "red":
-        return TashiGradients['red'];
+        return tashiGradients(context)['red'];
         break;
       case "blue":
-        return TashiGradients['blue'];
+        return tashiGradients(context)['blue'];
         break;
       case "both":
-        return TashiGradients['green'];
+        return tashiGradients(context)['green'];
         break;
       default:
-        return TashiGradients['transparent'];
+        return tashiGradients(context)['transparent'];
         break;
     }
   }
 
-  List<Subject> getList() {
+  List<Subject> getList(context) {
     return List<Subject>.from(genList(
         weekday["List"],
         (index, value) => new Subject(
             index,
             value["Name"],
             cab(value["Cabinet"]),
-            whoLes(value["Who"]),
+            whoLes(value["Who"], context),
             getTimetable()[index]["start"],
             getTimetable()[index]["end"],
             checkSubjectNames(value["Name"]))));
@@ -93,7 +93,7 @@ class SubjectList extends StatelessWidget {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(vertical: 8),
-          children: getList(),
+          children: getList(context),
         ));
   }
 }

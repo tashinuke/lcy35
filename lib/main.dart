@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:asitable/components/subject-tabs.dart';
 
-void main(){
+void main() {
   runApp(App());
 }
-class App extends StatefulWidget{
+
+class App extends StatefulWidget {
   App({Key key}) : super(key: key);
 
   @override
@@ -18,7 +19,9 @@ class AppState extends State<App> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Расписание',
-      theme: ThemeData(primaryColor: TashiColors['bk']),
+      themeMode: ThemeMode.dark,
+      theme: th,
+      darkTheme: thd,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

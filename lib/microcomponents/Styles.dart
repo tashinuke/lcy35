@@ -1,72 +1,118 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-
-MarkdownStyleSheet markdownStylesTS(context) {
-  return MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-    blockquote: Theme.of(context).textTheme.body1.copyWith(
-        fontSize: 18.0, color: TashiColors['in'], fontFamily: 'Rubik'),
-    p: Theme.of(context)
-        .textTheme
-        .body1
-        .copyWith(fontSize: 18.0, color: Colors.white70, fontFamily: 'Rubik'),
-    h1: Theme.of(context)
-        .textTheme
-        .body1
-        .copyWith(fontSize: 24.0, color: Colors.white, fontFamily: 'Rubik'),
-    h2: Theme.of(context)
-        .textTheme
-        .body1
-        .copyWith(fontSize: 22.0, color: Colors.white, fontFamily: 'Rubik'),
-    h3: Theme.of(context)
-        .textTheme
-        .body1
-        .copyWith(fontSize: 20.0, color: Colors.white, fontFamily: 'Rubik'),
-  );
-}
 
 const Map TashiColors = const <String, Color>{
   'bk': const Color(0xFF001A2B), // background
   'in': const Color(0xFF002741), // info
   'pr': const Color(0xFF62A3F2), // primary
-  'sb': const Color(0xFFCFCFCF), // subtitle
-  'tl': const Color(0xFFFFFFFF), // title
-  'rp': const Color(0xAF0066FF), // transparent primary
+  // light
+  'inl': const Color(0xFFD8F1FF), // info
 };
-const Map TashiGradients = {
-  'red': LinearGradient(
-      colors: [Colors.pink, Colors.orange],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight),
-  'blue': LinearGradient(
-      colors: [Colors.indigo, Colors.cyan],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight),
-  'green':  LinearGradient(
-      colors: [Colors.teal, Colors.lime],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight),
-  'accent':  LinearGradient(
-      colors: [Colors.blueAccent, Colors.lightBlueAccent],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight),
-  'transparent': LinearGradient(
-      colors: [Colors.transparent, Colors.transparent],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight),
-};
+ThemeData th = ThemeData(
+    splashColor: TashiColors['inl'],
+    fontFamily: 'Rubik',
+    scaffoldBackgroundColor: Colors.white,
+    primaryColor: TashiColors['pr'],
+    accentColor: TashiColors['inl'],
+    textTheme: TextTheme(
+        headline1: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w800,
+            fontSize: 21,
+            fontFamily: 'Rubik'),
+        headline2: TextStyle(
+            fontFamily: 'Rubik',
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+            fontSize: 16),
+        headline3: TextStyle(
+            fontFamily: 'Rubik',
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+            fontSize: 15),
+        bodyText1: TextStyle(
+            fontFamily: 'Rubik',
+            color: Colors.black,
+            fontWeight: FontWeight.w700),
+        bodyText2: TextStyle(
+            fontFamily: 'Rubik',
+            color: Colors.blueGrey,
+            fontWeight: FontWeight.w500)));
+ThemeData thd = ThemeData(
+    splashColor: TashiColors['in'],
+    scaffoldBackgroundColor: TashiColors['bk'],
+    primaryColor: TashiColors['pr'],
+    accentColor: TashiColors['in'],
+    textTheme: TextTheme(
+        headline1: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w800,
+            fontSize: 21,
+            fontFamily: 'Rubik'),
+        headline2: TextStyle(
+            fontFamily: 'Rubik',
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+            fontSize: 16),
+        headline3: TextStyle(
+            fontFamily: 'Rubik',
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 15),
+        bodyText1: TextStyle(
+            fontFamily: 'Rubik',
+            color: Colors.white,
+            fontWeight: FontWeight.w700),
+        bodyText2: TextStyle(
+            fontFamily: 'Rubik',
+            color: Colors.blueGrey,
+            fontWeight: FontWeight.w500)));
 
-// ignore: non_constant_identifier_names
-TextStyle LabelTS = TextStyle(
-    fontSize: 16.0,
-    fontFamily: 'Rubik',
-    fontWeight: FontWeight.w600);
-// ignore: non_constant_identifier_names
-TextStyle TitleTS = TextStyle(
-    fontSize: 20.0,
-    fontFamily: 'Rubik',
-    color: TashiColors['tl'],
-    fontWeight: FontWeight.w700);
-// ignore: non_constant_identifier_names
-TextStyle SimpleTS = TextStyle(color: TashiColors['tl'], fontFamily: 'Rubik');
-// ignore: non_constant_identifier_names
-TextStyle SubtextTS = TextStyle(color: TashiColors['sb'], fontFamily: 'Rubik');
+Map tashiGradients(context) {
+  if (Theme.of(context).textTheme.bodyText1.color == Colors.white) {
+    return {
+      'red': LinearGradient(
+          colors: [Colors.pink, Colors.orange],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight),
+      'blue': LinearGradient(
+          colors: [Colors.indigo, Colors.cyan],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight),
+      'green': LinearGradient(
+          colors: [Colors.teal, Colors.lime],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight),
+      'accent': LinearGradient(
+          colors: [Colors.blueAccent, const Color(0xFF62A3F2)],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight),
+      'transparent': LinearGradient(
+          colors: [Colors.transparent, Colors.transparent],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight),
+    };
+  } else {
+    return {
+      'red': LinearGradient(
+          colors: [Colors.pink[100], Colors.orange[100]],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight),
+      'blue': LinearGradient(
+          colors: [Colors.indigo[100], Colors.cyan[100]],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight),
+      'green': LinearGradient(
+          colors: [Colors.teal[100], Colors.lime[100]],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight),
+      'accent': LinearGradient(
+          colors: [TashiColors['inl'], Colors.blue[100]],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight),
+      'transparent': LinearGradient(
+          colors: [Colors.transparent, Colors.transparent],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight),
+    };
+  }
+}

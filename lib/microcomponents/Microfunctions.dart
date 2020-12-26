@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
-import 'package:asitable/microcomponents/Styles.dart';
+
 List genList(List data, Function builder) {
   return data
       .asMap()
@@ -9,13 +9,21 @@ List genList(List data, Function builder) {
       .toList();
 }
 
-Widget toHumanTime(int start, int end) {
+Widget toHumanTime(int start, int end, context) {
   return Row(children: [
     Text(
-        "${start ~/ 60}:${start % 60 > 9 ? start % 60 : '0' + (start % 60).toString()} ", style: SubtextTS),
-    Icon(FluentSystemIcons.ic_fluent_arrow_right_filled, color: TashiColors['sb'], size: 16),
+      "${start ~/ 60}:${start % 60 > 9 ? start % 60 : '0' + (start % 60).toString()} ",
+      style: Theme.of(context).textTheme.bodyText2,
+    ),
+    Icon(
+      FluentSystemIcons.ic_fluent_arrow_right_filled,
+      size: 16,
+      color: Theme.of(context).textTheme.bodyText2.color,
+    ),
     Text(
-        " ${end ~/ 60}:${end % 60 > 9 ? end % 60 : '0' + (end % 60).toString()}", style: SubtextTS)
+      " ${end ~/ 60}:${end % 60 > 9 ? end % 60 : '0' + (end % 60).toString()}",
+      style: Theme.of(context).textTheme.bodyText2,
+    )
   ]);
 }
 
